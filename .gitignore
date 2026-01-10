@@ -1,0 +1,40 @@
+# Product Mix Clustering Project .gitignore
+# Auto-ignore large/derived
+/output/**
+!/output/tests/**
+/data/**
+/logs/**
+*.csv
+*.xlsx
+*.parquet
+*.feather
+*.tgz
+*.zip
+*.tar.gz
+*.ipynb_checkpoints/
+/nohup.out
+logs/**/*.log
+# Dev/OS/editor
+.venv/
+__pycache__/
+*.pyc
+**/.DS_Store
+.agent-os/
+.cursor/
+
+# Logs and run artifacts
+runlogs/
+output_log.txt
+*.log
+src/output/*.log
+
+# Test output files
+.cucumber-data.json
+report.html
+
+# Development artifacts
+*.backup
+*.tmp
+*.bak
+src/data/api_data/
+src/data/*.txt

@@ -1,0 +1,14 @@
+# Git LFS tracking for large CSV files
+*.csv filter=lfs diff=lfs merge=lfs -text
+*.xlsx filter=lfs diff=lfs merge=lfs -text
+*.xls filter=lfs diff=lfs merge=lfs -text
+# Specific large files to track with LFS
+data/api_data/*.csv filter=lfs diff=lfs merge=lfs -text
+data/spu_store_mapping.csv filter=lfs diff=lfs merge=lfs -text
+data/normalized_spu_limited_matrix.csv filter=lfs diff=lfs merge=lfs -text
+output/complete_category_sales_*.csv filter=lfs diff=lfs merge=lfs -text
+output/store_config_*.csv filter=lfs diff=lfs merge=lfs -text
+output/complete_spu_sales_*.csv filter=lfs diff=lfs merge=lfs -text
+# Keep small files as regular text
+data/store_codes.csv -filter=lfs -diff=lfs -merge=lfs
+data/store_list.txt -filter=lfs -diff=lfs -merge=lfs

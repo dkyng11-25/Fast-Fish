@@ -1,0 +1,119 @@
+{
+  "execution_time": "2025-09-25 10:21:43",
+  "steps_executed": [
+    6,
+    7,
+    8,
+    9,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "steps_skipped": [
+    10,
+    11
+  ],
+  "test_configuration": {
+    "steps": {
+      "6": {
+        "name": "Cluster Analysis",
+        "test_file": "subset_tests/test_step6_subset_comprehensive.py",
+        "slow": false
+      },
+      "7": {
+        "name": "Missing Category Rule",
+        "test_file": "subset_tests/test_step7_subset_comprehensive.py",
+        "slow": false
+      },
+      "8": {
+        "name": "Imbalanced Rule",
+        "test_file": "subset_tests/test_step8_subset_comprehensive.py",
+        "slow": false
+      },
+      "9": {
+        "name": "Below Minimum Rule",
+        "test_file": "subset_tests/test_step9_subset_comprehensive.py",
+        "slow": false
+      },
+      "10": {
+        "name": "SPU Assortment Optimization",
+        "test_file": "slow_tests/test_step10_subset_comprehensive.py",
+        "slow": true
+      },
+      "11": {
+        "name": "Missed Sales Opportunity",
+        "test_file": "slow_tests/test_step11_subset_comprehensive.py",
+        "slow": true
+      },
+      "12": {
+        "name": "Sales Performance Rule",
+        "test_file": "subset_tests/test_step12_subset_comprehensive.py",
+        "slow": false
+      },
+      "13": {
+        "name": "Consolidate SPU Rules",
+        "test_file": "subset_tests/test_step13_subset_comprehensive.py",
+        "slow": false
+      },
+      "14": {
+        "name": "Global Overview Dashboard",
+        "test_file": "subset_tests/test_step14_subset_comprehensive.py",
+        "slow": false
+      },
+      "15": {
+        "name": "Historical Baseline Download",
+        "test_file": "subset_tests/test_step15_subset_comprehensive.py",
+        "slow": false
+      },
+      "16": {
+        "name": "Create Comparison Tables",
+        "test_file": "subset_tests/test_step16_subset_comprehensive.py",
+        "slow": false
+      },
+      "17": {
+        "name": "Augment Recommendations",
+        "test_file": "subset_tests/test_step17_subset_comprehensive.py",
+        "slow": false
+      },
+      "18": {
+        "name": "Validate Results",
+        "test_file": "subset_tests/test_step18_subset_comprehensive.py",
+        "slow": false
+      }
+    },
+    "parallel_groups": {
+      "fast_steps": [
+        6,
+        7,
+        8,
+        9,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "slow_steps": [
+        10,
+        11
+      ]
+    },
+    "execution_config": {
+      "max_parallel_workers": 3,
+      "timeout_per_test": 600,
+      "retry_failed_tests": true,
+      "generate_reports": true
+    }
+  },
+  "summary": {
+    "total_steps": 11,
+    "fast_steps": 11,
+    "slow_steps": 0
+  }
+}

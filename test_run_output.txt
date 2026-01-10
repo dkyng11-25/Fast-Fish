@@ -1,0 +1,103 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.4, pytest-8.4.2, pluggy-1.6.0 -- /Users/borislavdzodzo/.pyenv/versions/global-env/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/borislavdzodzo/Desktop/Dev/ais-129-issues-found-when-running-main
+configfile: pytest.ini
+plugins: typeguard-4.4.4
+collecting ... collected 127 items / 58 errors
+
+=============================== warnings summary ===============================
+tests/common/test_utils.py:17
+  /Users/borislavdzodzo/Desktop/Dev/ais-129-issues-found-when-running-main/tests/common/test_utils.py:17: PytestCollectionWarning: cannot collect test class 'TestDataManager' because it has a __init__ constructor (from: tests/common/test_utils.py)
+    class TestDataManager:
+
+../../../.pyenv/versions/global-env/lib/python3.12/site-packages/pandera/_pandas_deprecated.py:160
+  /Users/borislavdzodzo/.pyenv/versions/global-env/lib/python3.12/site-packages/pandera/_pandas_deprecated.py:160: FutureWarning: Importing pandas-specific classes and functions from the
+  top-level pandera module will be **removed in a future version of pandera**.
+  If you're using pandera to validate pandas objects, we highly recommend updating
+  your import:
+  
+  ```
+  # old import
+  import pandera as pa
+  
+  # new import
+  import pandera.pandas as pa
+  ```
+  
+  If you're using pandera to validate objects from other compatible libraries
+  like pyspark or polars, see the supported libraries section of the documentation
+  for more information on how to import pandera:
+  
+  https://pandera.readthedocs.io/en/stable/supported_libraries.html
+  
+  To disable this warning, set the environment variable:
+  
+  ```
+  export DISABLE_PANDERA_IMPORT_WARNING=True
+  ```
+  
+    warnings.warn(_future_warning, FutureWarning)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/step02/isolated/test_step2_dual_output_isolated.py
+ERROR tests/step03/isolated/test_step3_dual_output_isolated.py
+ERROR tests/step04/isolated/test_step4_dual_output_isolated.py
+ERROR tests/step05/isolated/test_step5_dual_output_isolated.py
+ERROR tests/step09/isolated/test_step9_dual_output_isolated.py
+ERROR tests/step10/isolated/test_step10_dual_output_isolated.py
+ERROR tests/step11/isolated/test_step11_dual_output_isolated.py
+ERROR tests/step12/isolated/test_step12_dual_output_isolated.py
+ERROR tests/step13/isolated/test_step13_alignment_synthetic.py
+ERROR tests/step13/isolated/test_step13_dual_output_isolated.py
+ERROR tests/step13/isolated/test_step13_synthetic_alignment.py
+ERROR tests/step13/isolated/test_step13_synthetic_guards.py
+ERROR tests/step13/isolated/test_step13_synthetic_integrity.py
+ERROR tests/step13/isolated/test_step13_synthetic_post_consolidation.py
+ERROR tests/step13/isolated/test_step13_synthetic_regression.py
+ERROR tests/step13/isolated/test_step13_synthetic_shares.py
+ERROR tests/step15/isolated/test_step15_dual_output_isolated.py
+ERROR tests/step16/isolated/test_step16_dual_output_isolated.py
+ERROR tests/step17/integration/test_step17_imports_and_smoke.py
+ERROR tests/step17/isolated/test_step17_dual_output_isolated.py
+ERROR tests/step17/isolated/test_step17_synthetic_imports_and_execution.py
+ERROR tests/step18/isolated/test_step18_dual_output_isolated.py
+ERROR tests/step19/isolated/test_step19_dual_output_isolated.py
+ERROR tests/step20/isolated/test_step20_dual_output_isolated.py
+ERROR tests/step21/isolated/test_step21_dual_output_isolated.py
+ERROR tests/step22/integration/test_step22_data_path_fix.py
+ERROR tests/step22/isolated/test_step22_dual_output_isolated.py
+ERROR tests/step23/isolated/test_step23_dual_output_isolated.py
+ERROR tests/step24/isolated/test_step24_dual_output_isolated.py
+ERROR tests/step25/isolated/test_step25_dual_output_isolated.py
+ERROR tests/step26/isolated/test_step26_dual_output_isolated.py
+ERROR tests/step27/isolated/test_step27_dual_output_isolated.py
+ERROR tests/step28/isolated/test_step28_dual_output_isolated.py
+ERROR tests/step29/isolated/test_step29_dual_output_isolated.py
+ERROR tests/step29/isolated/test_step29_synthetic_duplicate_columns.py
+ERROR tests/step29/isolated/test_step29_synthetic_edge_cases.py
+ERROR tests/step30/isolated/test_step30_dual_output_isolated.py
+ERROR tests/step31/isolated/test_step31_dual_output_isolated.py
+ERROR tests/step31/isolated/test_step31_synthetic_duplicate_columns.py
+ERROR tests/step32/integration/test_step32_future_orientation.py
+ERROR tests/step32/integration/test_step32_variable_scope_fix.py
+ERROR tests/step32/isolated/test_step32_dual_output_isolated.py
+ERROR tests/step32/isolated/test_step32_synthetic_allocation_logic.py
+ERROR tests/step32/isolated/test_step32_synthetic_date_logic_and_allocation.py
+ERROR tests/step32/isolated/test_step32_synthetic_duplicate_columns.py
+ERROR tests/step33/isolated/test_step33_dual_output_isolated.py
+ERROR tests/step34a/isolated/test_step34_dual_output_isolated.py
+ERROR tests/step34a/isolated/test_step34a_synthetic_dual_output.py
+ERROR tests/step34b/isolated/test_step34b_dual_output_isolated.py
+ERROR tests/step35/isolated/test_step35_dual_output_isolated.py
+ERROR tests/step36/integration/test_step36_category_and_buffer.py
+ERROR tests/step36/integration/test_step36_planning_and_temperature.py
+ERROR tests/step36/integration/test_step36_womens_casual_pants_presence.py
+ERROR tests/step36/integration/test_step36_zh_only.py
+ERROR tests/step36/isolated/test_step36_debug.py
+ERROR tests/step36/isolated/test_step36_dual_output_isolated.py
+ERROR tests/step36/isolated/test_step36_synthetic_unified_delivery.py
+ERROR tests/step36/isolated/test_step36_with_real_data.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 58 errors during collection !!!!!!!!!!!!!!!!!!!
+======================== 2 warnings, 58 errors in 1.26s ========================

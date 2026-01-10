@@ -1,0 +1,195 @@
+Testing step_definitions...
+collected 0 items
+
+============================ no tests ran in 0.07s =============================
+
+Testing step01...
+SKIPPED [1] tests/step01/test_step1_dual_output.py:134: No output files found for step 1
+FAILED tests/step01/test_step1_dual_output_isolated.py::test_step1_dual_output_isolated
+========================= 1 failed, 3 skipped in 5.69s =========================
+
+Testing step02...
+FAILED tests/step02/test_step2_dual_output_isolated.py::test_step2_dual_output_isolated
+FAILED tests/step02/test_step2b_periods_cli.py::test_step2b_cli_explicit_periods_single
+======================== 2 failed, 6 skipped in 10.55s =========================
+
+Testing step03...
+SKIPPED [1] tests/step03/test_step3_dual_output.py:134: No output files found for step 3
+FAILED tests/step03/test_step3_dual_output_isolated.py::test_step3_dual_output_isolated
+========================= 1 failed, 3 skipped in 5.79s =========================
+
+Testing step04...
+=========================== short test summary info ============================
+FAILED tests/step04/test_step4_dual_output_isolated.py::test_step4_dual_output_isolated
+============================== 1 failed in 2.22s ===============================
+
+Testing step05...
+SKIPPED [1] tests/step05/test_step5_dual_output.py:134: No output files found for step 5
+FAILED tests/step05/test_step5_dual_output_isolated.py::test_step5_dual_output_isolated
+========================= 1 failed, 3 skipped in 5.69s =========================
+
+Testing step06...
+FAILED tests/step06/test_step6_dual_output.py::test_step6_output_has_period_label
+FAILED tests/step06/test_step6_dual_output_isolated.py::test_step6_dual_output_isolated
+========================= 2 failed, 7 passed in 35.81s =========================
+
+Testing step07...
+FAILED tests/step07/test_step7_synthetic_missing_category.py::test_step7_synthetic_fast_fish_validation_isolated
+FAILED tests/step07/test_step7_synthetic_missing_category.py::test_step7_synthetic_quantity_recommendations_isolated
+======================== 13 failed, 4 passed in 32.25s =========================
+
+Testing step08...
+FAILED tests/step08/test_step8_dual_output.py::test_step8_symlinks_point_to_timestamped
+FAILED tests/step08/test_step8_dual_output_isolated.py::test_step8_dual_output_isolated
+========================= 2 failed, 2 passed in 5.54s ==========================
+
+Testing step09...
+FAILED tests/step09/test_step9_dual_output.py::test_step9_symlinks_point_to_timestamped
+FAILED tests/step09/test_step9_dual_output_isolated.py::test_step9_dual_output_isolated
+========================= 2 failed, 2 passed in 5.55s ==========================
+
+Testing step10...
+FAILED tests/step10/test_step10_dual_output.py::test_step10_symlinks_point_to_timestamped
+FAILED tests/step10/test_step10_dual_output_isolated.py::test_step10_dual_output_isolated
+========================= 2 failed, 2 passed in 5.65s ==========================
+
+Testing step11...
+FAILED tests/step11/test_step11_dual_output.py::test_step11_symlinks_point_to_timestamped
+FAILED tests/step11/test_step11_dual_output_isolated.py::test_step11_dual_output_isolated
+========================= 2 failed, 2 passed in 5.76s ==========================
+
+Testing step12...
+FAILED tests/step12/test_step12_dual_output.py::test_step12_symlinks_point_to_timestamped
+FAILED tests/step12/test_step12_dual_output_isolated.py::test_step12_dual_output_isolated
+========================= 2 failed, 2 passed in 5.52s ==========================
+
+Testing step13...
+ERROR tests/step13/test_step13_synthetic_shares.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 4 errors in 0.28s ===============================
+
+Testing step14...
+FAILED tests/step14/test_step14_dual_output_isolated.py::test_step14_dual_output_isolated
+FAILED tests/step14/test_step14_synthetic_coverage.py::test_step14_output_format_validation_synthetic
+======================== 4 failed, 13 passed in 29.88s =========================
+
+Testing step15...
+=========================== short test summary info ============================
+FAILED tests/step15/test_step15_dual_output_isolated.py::test_step15_dual_output_isolated
+========================= 1 failed, 3 passed in 5.63s ==========================
+
+Testing step16...
+=========================== short test summary info ============================
+FAILED tests/step16/test_step16_dual_output_isolated.py::test_step16_dual_output_isolated
+========================= 1 failed, 3 passed in 5.48s ==========================
+
+Testing step17...
+FAILED tests/step17/test_step17_synthetic_imports_and_execution.py::TestStep17Synthetic::test_step17_execution_with_synthetic_data
+FAILED tests/step17/test_step17_synthetic_imports_and_execution.py::test_step17_synthetic_regression
+========================= 3 failed, 8 passed in 17.33s =========================
+
+Testing step18...
+=========================== short test summary info ============================
+FAILED tests/step18/test_step18_dual_output_isolated.py::test_step18_dual_output_isolated
+========================= 1 failed, 3 passed in 5.60s ==========================
+
+Testing step19...
+=========================== short test summary info ============================
+FAILED tests/step19/test_step19_dual_output_isolated.py::test_step19_dual_output_isolated
+========================= 1 failed, 3 passed in 5.45s ==========================
+
+Testing step20...
+SKIPPED [1] tests/step20/test_step20_dual_output.py:134: No output files found for step 20
+FAILED tests/step20/test_step20_dual_output_isolated.py::test_step20_dual_output_isolated
+========================= 1 failed, 3 skipped in 5.34s =========================
+
+Testing step21...
+=========================== short test summary info ============================
+FAILED tests/step21/test_step21_dual_output_isolated.py::test_step21_dual_output_isolated
+========================= 1 failed, 3 passed in 5.39s ==========================
+
+Testing step22...
+=========================== short test summary info ============================
+FAILED tests/step22/test_step22_dual_output_isolated.py::test_step22_dual_output_isolated
+========================= 1 failed, 6 passed in 8.89s ==========================
+
+Testing step23...
+SKIPPED [1] tests/step23/test_step23_dual_output.py:134: No output files found for step 23
+FAILED tests/step23/test_step23_dual_output_isolated.py::test_step23_dual_output_isolated
+========================= 1 failed, 3 skipped in 5.41s =========================
+
+Testing step24...
+FAILED tests/step24/test_step24_dual_output.py::test_step24_creates_output_without_timestamp
+FAILED tests/step24/test_step24_dual_output_isolated.py::test_step24_dual_output_isolated
+========================= 2 failed, 2 passed in 5.90s ==========================
+
+Testing step25...
+FAILED tests/step25/test_step25_dual_output.py::test_step25_creates_output_without_timestamp
+FAILED tests/step25/test_step25_dual_output_isolated.py::test_step25_dual_output_isolated
+========================= 2 failed, 2 passed in 5.59s ==========================
+
+Testing step26...
+FAILED tests/step26/test_step26_dual_output.py::test_step26_creates_output_without_timestamp
+FAILED tests/step26/test_step26_dual_output_isolated.py::test_step26_dual_output_isolated
+========================= 2 failed, 2 passed in 5.58s ==========================
+
+Testing step27...
+FAILED tests/step27/test_step27_dual_output.py::test_step27_creates_output_without_timestamp
+FAILED tests/step27/test_step27_dual_output_isolated.py::test_step27_dual_output_isolated
+========================= 2 failed, 2 passed in 5.57s ==========================
+
+Testing step28...
+=========================== short test summary info ============================
+FAILED tests/step28/test_step28_dual_output_isolated.py::test_step28_dual_output_isolated
+========================= 1 failed, 3 passed in 5.54s ==========================
+
+Testing step29...
+SKIPPED [1] tests/step29/test_step29_dual_output.py:134: No output files found for step 29
+FAILED tests/step29/test_step29_dual_output_isolated.py::test_step29_dual_output_isolated
+=================== 1 failed, 9 passed, 3 skipped in 40.98s ====================
+
+Testing step2b...
+FAILED tests/step2b/test_step2b_synthetic_isolated.py::test_step2b_single_period_still_works_isolated
+FAILED tests/step2b/test_step2b_synthetic_isolated.py::test_step2b_output_isolation_isolated
+============================== 5 failed in 11.05s ==============================
+
+Testing step30...
+SKIPPED [1] tests/step30/test_step30_dual_output.py:134: No output files found for step 30
+FAILED tests/step30/test_step30_dual_output_isolated.py::test_step30_dual_output_isolated
+========================= 1 failed, 3 skipped in 5.41s =========================
+
+Testing step31...
+FAILED tests/step31/test_step31_dual_output.py::test_step31_creates_output_without_timestamp
+FAILED tests/step31/test_step31_dual_output_isolated.py::test_step31_dual_output_isolated
+========================= 2 failed, 7 passed in 17.04s =========================
+
+Testing step32...
+FAILED tests/step32/test_step32_synthetic_duplicate_columns.py::TestStep32DuplicateColumns::test_allocation_accuracy_with_duplicates
+FAILED tests/step32/test_step32_synthetic_duplicate_columns.py::test_step32_duplicate_column_regression
+================== 11 failed, 15 passed, 3 skipped in 48.41s ===================
+
+Testing step33...
+tests/step33/test_step33_dual_output_isolated.py .                       [100%]
+
+============================== 4 passed in 5.68s ===============================
+
+Testing step34a...
+tests/step34a/test_step34a_synthetic_dual_output.py ...                  [100%]
+
+============================== 4 passed in 5.68s ===============================
+
+Testing step34b...
+tests/step34b/test_step34_dual_output_isolated.py .                      [100%]
+
+============================== 1 passed in 2.15s ===============================
+
+Testing step35...
+tests/step35/test_step35_dual_output_isolated.py .                       [100%]
+
+============================== 4 passed in 5.80s ===============================
+
+Testing step36...
+FAILED tests/step36/test_step36_synthetic_unified_delivery.py::TestStep36Synthetic::test_step36_planning_season_mapping
+FAILED tests/step36/test_step36_womens_casual_pants_presence.py::test_step36_presence_womens_casual_pants
+======================== 4 failed, 15 passed in 42.93s =========================
+

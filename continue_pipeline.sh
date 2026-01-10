@@ -1,0 +1,185 @@
+#!/bin/bash
+
+# Continue Pipeline Execution (Skip Step 2B)
+# Step 2B is optional seasonal data consolidation - not critical for validation
+
+set -e
+
+cd /Users/borislavdzodzo/Desktop/Dev/ais-129-issues-found-when-running-main
+
+export RECENT_MONTHS_BACK=3
+export PIPELINE_TARGET_YYYYMM=202510
+export PIPELINE_TARGET_PERIOD=A
+export PYTHONPATH=.
+
+echo "🔄 Continuing Pipeline from Step 3..."
+echo "Note: Step 2B (Seasonal Data) skipped - optional step"
+echo ""
+
+# Step 3: Prepare Matrix
+echo "▶️  Step 3: Prepare Matrix"
+python3 src/step3_prepare_matrix.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Skip Step 4 (Weather download)
+echo "⏭️  Skipping Step 4 (Download Weather Data) - using symlinked data"
+echo ""
+
+# Step 5: Calculate Feels Like Temperature
+echo "▶️  Step 5: Calculate Feels Like Temperature"
+python3 src/step5_calculate_feels_like_temperature.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Step 6: Cluster Analysis
+echo "▶️  Step 6: Cluster Analysis"
+python3 src/step6_cluster_analysis.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Steps 7-12: Business Rules
+echo "📋 PHASE 2: Business Rules (Steps 7-12)"
+echo ""
+
+for step in 7 8 9 11 12; do
+    case $step in
+        7) name="Missing Category Rule" ;;
+        8) name="Imbalanced Rule" ;;
+        9) name="Below Minimum Rule" ;;
+        11) name="Missed Sales Opportunity" ;;
+        12) name="Sales Performance Rule" ;;
+    esac
+    
+    echo "▶️  Step $step: $name"
+    python3 src/step${step}_*.py --target-yyyymm 202510 --target-period A
+    echo ""
+done
+
+# Step 10 needs both source (--yyyymm/--period) and target arguments
+echo "▶️  Step 10: SPU Assortment Optimization"
+python3 src/step10_spu_assortment_optimization.py --yyyymm 202510 --period A --target-yyyymm 202510 --target-period A
+echo ""
+
+# Step 13: Consolidate (FAST_MODE)
+echo "▶️  Step 13: Consolidate SPU Rules (FAST_MODE)"
+FAST_MODE=1 python3 src/step13_consolidate_spu_rules.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Step 14: Fast Fish Format
+echo "▶️  Step 14: Create Fast Fish Format"
+python3 src/step14_create_fast_fish_format.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Steps 15-18: Historical & Trend Analysis
+echo "📈 PHASE 4: Historical & Trend Analysis (Steps 15-18)"
+echo ""
+
+echo "▶️  Step 15: Download Historical Baseline"
+python3 src/step15_download_historical_baseline.py --target-yyyymm 202510 --target-period A --baseline-yyyymm 202410 --baseline-period A
+echo ""
+
+echo "▶️  Step 16: Create Comparison Tables"
+python3 src/step16_create_comparison_tables.py --target-yyyymm 202510 --target-period A --baseline-yyyymm 202410 --baseline-period A
+echo ""
+
+echo "▶️  Step 17: Augment Recommendations"
+python3 src/step17_augment_recommendations.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 18: Validate Results"
+python3 src/step18_validate_results.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Steps 19-21: Detailed Analysis
+echo "🔍 PHASE 5: Detailed Analysis & Validation (Steps 19-21)"
+echo ""
+
+echo "▶️  Step 19: Detailed SPU Breakdown"
+python3 src/step19_detailed_spu_breakdown.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 20: Data Validation"
+python3 src/step20_data_validation.py
+echo ""
+
+echo "▶️  Step 21: Label Tag Recommendations"
+python3 src/step21_label_tag_recommendations.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Steps 22-24: Store Enrichment
+echo "🏪 PHASE 6: Store Enrichment (Steps 22-24)"
+echo ""
+
+echo "▶️  Step 22: Store Attribute Enrichment"
+python3 src/step22_store_attribute_enrichment.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 23: Update Clustering Features"
+python3 src/step23_update_clustering_features.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 24: Comprehensive Cluster Labeling"
+python3 src/step24_comprehensive_cluster_labeling.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Steps 25-30: Advanced Analysis
+echo "🎯 PHASE 7: Advanced Analysis (Steps 25-30)"
+echo ""
+
+echo "▶️  Step 25: Product Role Classifier"
+python3 src/step25_product_role_classifier.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 26: Price Elasticity Analyzer (Skip Elasticity)"
+STEP26_SKIP_ELASTICITY=1 STEP26_SOURCE_YYYYMM=202510 STEP26_SOURCE_PERIOD=A python3 src/step26_price_elasticity_analyzer.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 27: Gap Matrix Generator"
+python3 src/step27_gap_matrix_generator.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 28: Scenario Analyzer"
+python3 src/step28_scenario_analyzer.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 29: Supply-Demand Gap Analysis"
+python3 src/step29_supply_demand_gap_analysis.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 30: Sell-Through Optimization Engine"
+python3 src/step30_sellthrough_optimization_engine.py --target-yyyymm 202510 --target-period A
+echo ""
+
+# Steps 31-36: Store-Level Deployment
+echo "🚀 PHASE 8: Store-Level Deployment (Steps 31-36)"
+echo ""
+
+echo "▶️  Step 31: Gap Analysis Workbook"
+python3 src/step31_gap_analysis_workbook.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 32: Store Allocation"
+python3 src/step32_store_allocation.py --period A --target-yyyymm 202510
+echo ""
+
+echo "▶️  Step 33: Store-Level Merchandising Rules"
+python3 src/step33_store_level_merchandising_rules.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 34A: Cluster Strategy Optimization"
+python3 src/step34a_cluster_strategy_optimization.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 34B: Unify Outputs"
+python3 src/step34b_unify_outputs.py --target-yyyymm 202510 --periods A
+echo ""
+
+echo "▶️  Step 35: Merchandising Strategy Deployment"
+python3 src/step35_merchandising_strategy_deployment.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "▶️  Step 36: Unified Delivery Builder"
+python3 src/step36_unified_delivery_builder.py --target-yyyymm 202510 --target-period A
+echo ""
+
+echo "🎉 =============================================="
+echo "🎉 PIPELINE EXECUTION COMPLETE!"
+echo "🎉 =============================================="

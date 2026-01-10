@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPU Analysis Package - Client Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .folder-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .folder-card:hover {
+            border-color: #3498db;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .folder-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .folder-icon {
+            font-size: 2em;
+            margin-right: 15px;
+        }
+
+        .folder-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .file-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .file-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-family: 'Courier New', monospace;
+            color: #2980b9;
+            font-size: 0.9em;
+        }
+
+        .file-desc {
+            color: #7f8c8d;
+            font-size: 0.85em;
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .priority-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
+        .priority-badge.medium {
+            background: #f39c12;
+        }
+
+        .priority-badge.low {
+            background: #27ae60;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .action-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .action-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .action-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .action-desc {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .next-steps {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .next-steps h2 {
+            color: white;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .steps-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps-list li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .steps-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .folder-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>🎯 SPU Analysis Package</h1>
+            <div class="subtitle">Style Product Unit Analysis & Business Intelligence</div>
+            <div class="subtitle">Analysis Period: 202506A • Generated: January 27, 2025</div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">2,263</div>
+                    <div class="stat-label">Stores Analyzed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">526K</div>
+                    <div class="stat-label">SPU Combinations</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">44</div>
+                    <div class="stat-label">Store Clusters</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Business Rules</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="section">
+            <h2>📋 Executive Summary</h2>
+            <p>This comprehensive analysis package provides granular insights at the individual Style Product Unit (SPU) level across your entire retail network. Using advanced clustering techniques and statistical analysis, we've identified specific optimization opportunities and performance patterns.</p>
+            
+            <div class="action-grid">
+                <div class="action-card">
+                    <div class="action-number">43K</div>
+                    <div class="action-title">Imbalanced SPUs</div>
+                    <div class="action-desc">Allocation optimization opportunities across 2,254 stores</div>
+                </div>
+                <div class="action-card">
+                    <div class="action-number">3,878</div>
+                    <div class="action-title">Missing Opportunities</div>
+                    <div class="action-desc">Proven SPU opportunities in 1,611 stores</div>
+                </div>
+                <div class="action-card">
+                    <div class="action-number">1,326</div>
+                    <div class="action-title">Performance Gaps</div>
+                    <div class="action-desc">Stores with sales performance improvement potential</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Package Contents -->
+        <div class="section">
+            <h2>📁 Package Contents Guide</h2>
+            <p>Your analysis package is organized into focused sections for easy navigation and analysis:</p>
+            
+            <div class="folder-grid">
+                <!-- Clustering Folder -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <div class="folder-icon">📊</div>
+                        <div class="folder-title">/clustering/</div>
+                    </div>
+                    <p><strong>Store Clustering Results</strong></p>
+                    <p>Temperature-aware clustering analysis with 44 balanced clusters across 7 climate zones.</p>
+                    <ul class="file-list">
+                        <li>
+                            <span class="file-name">clustering_results_spu.csv</span>
+                            <span class="file-desc">Main cluster assignments</span>
+                        </li>
+                        <li>
+                            <span class="file-name">cluster_profiles_spu.csv</span>
+                            <span class="file-desc">Detailed cluster characteristics</span>
+                        </li>
+                        <li>
+                            <span class="file-name">per_cluster_metrics_spu.csv</span>
+                            <span class="file-desc">Statistical metrics per cluster</span>
+                        </li>
+                        <li>
+                            <span class="file-name">spu_clustering_documentation.md</span>
+                            <span class="file-desc">Technical methodology</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Rules Folder -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <div class="folder-icon">🎯</div>
+                        <div class="folder-title">/rules/</div>
+                    </div>
+                    <p><strong>Business Rule Analysis</strong></p>
+                    <p>Comprehensive rule-based analysis identifying optimization opportunities.</p>
+                    <ul class="file-list">
+                        <li>
+                            <span class="file-name">consolidated_spu_rule_results.csv</span>
+                            <span class="file-desc">All rules combined (2.3MB)</span>
+                            <span class="priority-badge">HIGH</span>
+                        </li>
+                        <li>
+                            <span class="file-name">rule7_missing_spu_*</span>
+                            <span class="file-desc">Missing opportunities (3,878 cases)</span>
+                            <span class="priority-badge">HIGH</span>
+                        </li>
+                        <li>
+                            <span class="file-name">rule8_imbalanced_spu_*</span>
+                            <span class="file-desc">Allocation imbalances (43,170 cases)</span>
+                            <span class="priority-badge">HIGH</span>
+                        </li>
+                        <li>
+                            <span class="file-name">rule10_smart_overcapacity_spu_*</span>
+                            <span class="file-desc">Reallocation opportunities (1,219 cases)</span>
+                            <span class="priority-badge medium">MEDIUM</span>
+                        </li>
+                        <li>
+                            <span class="file-name">rule12_sales_performance_spu_*</span>
+                            <span class="file-desc">Performance analysis (1,326 stores)</span>
+                            <span class="priority-badge medium">MEDIUM</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Dashboards Folder -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <div class="folder-icon">📈</div>
+                        <div class="folder-title">/dashboards/</div>
+                    </div>
+                    <p><strong>Interactive Dashboards</strong></p>
+                    <p>Executive-level dashboards for KPI monitoring and geographic analysis.</p>
+                    <ul class="file-list">
+                        <li>
+                            <span class="file-name">global_overview_spu_dashboard.html</span>
+                            <span class="file-desc">Executive KPI dashboard</span>
+                            <span class="priority-badge">HIGH</span>
+                        </li>
+                        <li>
+                            <span class="file-name">interactive_map_spu_dashboard.html</span>
+                            <span class="file-desc">Geographic analysis (7.1MB)</span>
+                            <span class="priority-badge">HIGH</span>
+                        </li>
+                    </ul>
+                    <div style="margin-top: 15px; padding: 10px; background: #e8f5e8; border-radius: 5px; font-size: 0.9em;">
+                        💡 <strong>Quick Start:</strong> Open these HTML files in your web browser for interactive exploration
+                    </div>
+                </div>
+
+                <!-- Visualizations Folder -->
+                <div class="folder-card">
+                    <div class="folder-header">
+                        <div class="folder-icon">🎨</div>
+                        <div class="folder-title">/visualizations/</div>
+                    </div>
+                    <p><strong>Charts & Visual Analysis</strong></p>
+                    <p>Statistical visualizations and cluster analysis charts for presentations.</p>
+                    <ul class="file-list">
+                        <li>
+                            <span class="file-name">cluster_visualization_spu.png</span>
+                            <span class="file-desc">Cluster distribution chart</span>
+                        </li>
+                        <li>
+                            <span class="file-name">cluster_map_spu.html</span>
+                            <span class="file-desc">Interactive cluster map</span>
+                        </li>
+                        <li>
+                            <span class="file-name">cluster_plots_spu.html</span>
+                            <span class="file-desc">Interactive analysis charts</span>
+                        </li>
+                        <li>
+                            <span class="file-name">cluster_analysis_spu.csv</span>
+                            <span class="file-desc">Underlying visualization data</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Notes -->
+        <div class="section">
+            <h2>⚠️ Important Technical Notes</h2>
+            
+            <div class="warning-box">
+                <h3>🔍 Rule 9 Limitation</h3>
+                <p><strong>Below Minimum SPU Analysis:</strong> This rule has logical inconsistencies when applied to individual SPUs, as Style Product Units cannot have fractional style counts. The rule is more appropriate for subcategory-level analysis.</p>
+                <p><strong>Recommendation:</strong> Focus on Rules 7, 8, 10, and 12 for actionable SPU-level insights.</p>
+            </div>
+
+            <div style="background: #e8f4fd; border: 1px solid #b3d9ff; border-radius: 8px; padding: 20px; margin: 20px 0;">
+                <h3 style="color: #0066cc; margin-bottom: 10px;">🔧 Methodology Highlights</h3>
+                <ul style="color: #0066cc; margin-left: 20px;">
+                    <li><strong>Clustering:</strong> K-means with temperature stratification</li>
+                    <li><strong>Statistical Validation:</strong> Z-score analysis for imbalance detection</li>
+                    <li><strong>Peer Benchmarking:</strong> Cluster-relative performance comparison</li>
+                    <li><strong>Multi-profile Analysis:</strong> Conservative/Balanced/Aggressive scenarios</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Usage Guide -->
+        <div class="section">
+            <h2>🚀 How to Use This Package</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div style="border: 2px solid #3498db; border-radius: 10px; padding: 20px;">
+                    <h3 style="color: #3498db; margin-bottom: 15px;">👔 For Executives</h3>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Start with <code>consolidated_spu_rule_summary.md</code></li>
+                        <li>Open <code>global_overview_spu_dashboard.html</code> for KPIs</li>
+                        <li>Focus on Rules 7, 8, and 12 for immediate impact</li>
+                    </ol>
+                </div>
+                
+                <div style="border: 2px solid #27ae60; border-radius: 10px; padding: 20px;">
+                    <h3 style="color: #27ae60; margin-bottom: 15px;">🏪 For Operations Teams</h3>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Use <code>interactive_map_spu_dashboard.html</code> for regional planning</li>
+                        <li>Analyze individual rule CSV files for detailed actions</li>
+                        <li>Leverage cluster profiles for peer benchmarking</li>
+                    </ol>
+                </div>
+                
+                <div style="border: 2px solid #e74c3c; border-radius: 10px; padding: 20px;">
+                    <h3 style="color: #e74c3c; margin-bottom: 15px;">📊 For Analysts</h3>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Examine detailed case files for root cause analysis</li>
+                        <li>Use visualization files for presentation materials</li>
+                        <li>Reference technical documentation for validation</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="next-steps">
+            <h2>🎯 Recommended Next Steps</h2>
+            <ul class="steps-list">
+                <li><strong>Validation:</strong> Review rule results with business stakeholders to confirm priorities</li>
+                <li><strong>Prioritization:</strong> Focus resources on high-impact opportunities (Rules 7 & 8)</li>
+                <li><strong>Implementation:</strong> Use cluster-based approach for regional rollout strategies</li>
+                <li><strong>Monitoring:</strong> Establish KPIs based on consolidated metrics for ongoing tracking</li>
+            </ul>
+            
+            <div class="contact-info">
+                <p><strong>Data Analytics Team</strong> • Version: SPU Analysis v1.0 • Updated: January 27, 2025</p>
+                <p>📧 Contact us for questions, additional analysis, or implementation support</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

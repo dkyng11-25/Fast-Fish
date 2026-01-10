@@ -1,0 +1,109 @@
+
+🔍 DUAL OUTPUT PATTERN VALIDATION
+================================================================================
+Timestamp: 2025-10-02 13:58:36
+Working Directory: /Users/borislavdzodzo/Desktop/Dev/ais-129-issues-found-when-running-main
+
+🔍 Validating Dual Output Pattern Implementation
+================================================================================
+
+📋 Step 13
+--------------------------------------------------------------------------------
+  ❌ granular_trend_data_preserved.csv - BOTH VERSIONS MISSING
+  ❌ corrected_detailed_spu_recommendations_202510A.csv - BOTH VERSIONS MISSING
+
+📋 Step 14
+--------------------------------------------------------------------------------
+  ✅ step14_rule_integration_reconciliation_202510A.csv
+     Generic: 11,632 bytes
+     Timestamped: 11,632 bytes (1 versions)
+  ❌ enhanced_fast_fish_dim_mismatches_202510A.csv - BOTH VERSIONS MISSING
+  ✅ enhanced_fast_fish_validation_202510A.json
+     Generic: 510 bytes
+     Timestamped: 510 bytes (1 versions)
+
+📋 Step 15
+--------------------------------------------------------------------------------
+  ✅ historical_reference_202410A.csv
+     Generic: 32,426 bytes
+     Timestamped: 32,426 bytes (1 versions)
+  ✅ year_over_year_comparison_202410A.csv
+     Generic: 115,436 bytes
+     Timestamped: 115,436 bytes (1 versions)
+  ✅ historical_insights_202410A.json
+     Generic: 1,318 bytes
+     Timestamped: 1,318 bytes (1 versions)
+
+📋 Step 16
+--------------------------------------------------------------------------------
+  ✅ spreadsheet_comparison_analysis_202510A.xlsx
+     Generic: 206,071 bytes
+     Timestamped: 206,072 bytes (1 versions)
+
+📋 Step 17
+--------------------------------------------------------------------------------
+  ✅ fast_fish_with_historical_and_cluster_trending_analysis_202510A.csv
+     Generic: 957,900 bytes
+     Timestamped: 957,900 bytes (1 versions)
+
+📋 Step 18
+--------------------------------------------------------------------------------
+  ✅ fast_fish_with_sell_through_analysis_202510A.csv
+     Generic: 1,185,180 bytes
+     Timestamped: 1,185,180 bytes (1 versions)
+
+📋 Step 19
+--------------------------------------------------------------------------------
+  ✅ detailed_spu_recommendations_202510A.csv
+     Generic: 534,420 bytes
+     Timestamped: 534,420 bytes (1 versions)
+  ✅ store_level_aggregation_202510A.csv
+     Generic: 6,119 bytes
+     Timestamped: 6,119 bytes (1 versions)
+  ✅ cluster_subcategory_aggregation_202510A.csv
+     Generic: 9,818 bytes
+     Timestamped: 9,818 bytes (1 versions)
+  ✅ spu_breakdown_summary_202510A.md
+     Generic: 3,386 bytes
+     Timestamped: 3,386 bytes (1 versions)
+
+📋 Step 20
+--------------------------------------------------------------------------------
+  ✅ comprehensive_validation_report.json
+     Generic: 946 bytes
+     Timestamped: 946 bytes (1 versions)
+
+📋 Step 21
+--------------------------------------------------------------------------------
+  ⚠️  D_F_Label_Tag_Recommendation_Sheet_202510A.xlsx - SIZE MISMATCH
+     Generic: 8,559 bytes
+     Timestamped: 9,383 bytes
+  ✅ client_desired_store_group_style_tags_targets_202510A.csv
+     Generic: 9,456 bytes
+     Timestamped: 9,456 bytes (1 versions)
+
+📋 Step 22
+--------------------------------------------------------------------------------
+  ✅ enriched_store_attributes.csv
+     Generic: 434,487 bytes
+     Timestamped: 434,487 bytes (1 versions)
+  ✅ store_type_analysis_report.md
+     Generic: 2,246 bytes
+     Timestamped: 2,246 bytes (1 versions)
+
+================================================================================
+📊 VALIDATION SUMMARY
+================================================================================
+Total Checks: 20
+✅ Passed: 16 (80.0%)
+❌ Failed: 4 (20.0%)
+
+⚠️  ISSUES FOUND: Some dual output patterns incomplete
+   Review the details above for specific missing files
+
+📋 Checking Pipeline Manifest
+================================================================================
+⚠️  Manifest not found: pipeline_manifest.json
+
+✅ Validation complete!
+

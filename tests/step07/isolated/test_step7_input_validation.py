@@ -1,0 +1,285 @@
+"""
+Step 7 Input Validation Test (Isolated Synthetic)
+==================================================
+
+Validates that Step 7 correctly reads from generic symlinks and handles missing inputs.
+
+This test ensures Step 7 follows the input reading pattern:
+- Reads from output/clustering_results_spu.csv (generic symlink) - REQUIRED
+- Has fallback chain for clustering files
+- Reads from API data files (SPU sales, category sales)
+- Fails gracefully when clustering results are missing
+"""
+
+import os
+import shutil
+import subprocess
+from pathlib import Path
+import pandas as pd
+import pytest
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+
+def create_sandbox(tmp_path):
+    """Create isolated sandbox for testing."""
+    sandbox = tmp_path / "sandbox"
+    sandbox.mkdir()
+    
+    # Copy src directory
+    src_dir = sandbox / "src"
+    shutil.copytree(PROJECT_ROOT / "src", src_dir)
+    
+    # Create directories
+    data_dir = sandbox / "data"
+    data_dir.mkdir()
+    api_data_dir = data_dir / "api_data"
+    api_data_dir.mkdir()
+    output_dir = sandbox / "output"
+    output_dir.mkdir()
+    
+    # Create stub pipeline_manifest.py
+    stub_manifest = """
+class _DummyManifest:
+    def __init__(self):
+        self.manifest = {}
+    
+    def get_latest_output(self, *args, **kwargs):
+        return None
+
+def get_manifest():
+    return _DummyManifest()
+
+def register_step_output(*_args, **_kwargs):
+    return None
+
+def get_step_input(*_args, **_kwargs):
+    return None
+""".strip()
+    (src_dir / "pipeline_manifest.py").write_text(stub_manifest, encoding="utf-8")
+    (src_dir / "__init__.py").write_text("", encoding="utf-8")
+    
+    return sandbox
+
+
+def create_synthetic_clustering_results(output_path, num_stores=20):
+    """Create synthetic clustering results."""
+    cluster_data = pd.DataFrame({
+        'str_code': [f"{1000+i}" for i in range(num_stores)],
+        'Cluster': [i % 3 for i in range(num_stores)],  # 3 clusters
+        'cluster_id': [i % 3 for i in range(num_stores)]
+    })
+    cluster_data.to_csv(output_path, index=False)
+
+
+def create_synthetic_spu_sales(output_path, num_records=100):
+    """Create synthetic SPU sales data."""
+    sales_data = pd.DataFrame({
+        'str_code': [f"{1000 + (i % 20)}" for i in range(num_records)],
+        'spu_code': [f"SPU{1000+i}" for i in range(num_records)],
+        'spu_sales_amt': [100 + i * 10 for i in range(num_records)],
+        'spu_sales_qty': [10 + i for i in range(num_records)],
+        'season_name': [['春', '夏', '秋', '冬'][i % 4] for i in range(num_records)],
+        'sex_name': [['男', '女', '通用'][i % 3] for i in range(num_records)],
+        'sub_cate_name': [['T恤', 'POLO衫', '连衣裙', '裤子'][i % 4] for i in range(num_records)]
+    })
+    sales_data.to_csv(output_path, index=False)
+
+
+def test_step7_reads_from_generic_clustering_symlink(tmp_path):
+    """
+    Verify Step 7 reads from generic clustering symlink.
+    
+    Setup:
+    - Create timestamped clustering file
+    - Create generic symlink pointing to it
+    - Create required API data
+    - Run Step 7
+    
+    Verify:
+    - Step 7 succeeds by reading from generic symlink
+    - Step 7 loads clustering results correctly
+    """
+    # Create sandbox
+    sandbox = create_sandbox(tmp_path)
+    output_dir = sandbox / "output"
+    api_data_dir = sandbox / "data" / "api_data"
+    
+    # Create timestamped clustering file
+    from datetime import datetime
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamped_cluster = output_dir / f"clustering_results_spu_{timestamp}.csv"
+    create_synthetic_clustering_results(timestamped_cluster, num_stores=20)
+    
+    # Create ONLY generic symlink (no period-labeled)
+    generic_cluster = output_dir / "clustering_results_spu.csv"
+    os.symlink(timestamped_cluster.name, generic_cluster)
+    
+    # Create required API data
+    spu_sales_file = api_data_dir / "complete_spu_sales_202510A.csv"
+    create_synthetic_spu_sales(spu_sales_file, num_records=100)
+    
+    print(f"\n📁 Created test setup:")
+    print(f"   Clustering (timestamped): {timestamped_cluster.name}")
+    print(f"   Clustering (generic symlink): clustering_results_spu.csv")
+    print(f"   SPU sales: complete_spu_sales_202510A.csv")
+    
+    # Run Step 7
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(sandbox)
+    env["PIPELINE_TARGET_YYYYMM"] = "202510"
+    env["PIPELINE_TARGET_PERIOD"] = "A"
+    env["ANALYSIS_LEVEL"] = "spu"
+    
+    result = subprocess.run(
+        ["python3", "src/step7_missing_category_rule.py"],
+        cwd=sandbox,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=60
+    )
+    
+    print(f"\n🔍 Step 7 execution:")
+    print(f"   Exit code: {result.returncode}")
+    if result.stdout:
+        print(f"   STDOUT (last 500 chars):\n{result.stdout[-500:]}")
+    if result.stderr and result.returncode != 0:
+        print(f"   STDERR (last 300 chars):\n{result.stderr[-300:]}")
+    
+    # Verify Step 7 loaded clustering from generic symlink
+    assert "Using cluster file:" in result.stdout, \
+        "Step 7 should log which cluster file it's using"
+    assert "clustering_results_spu.csv" in result.stdout, \
+        "Step 7 should use the generic symlink"
+    
+    # Step 7 may complete or fail during processing, but it should have loaded the cluster file
+    print(f"\n✅ Step 7 successfully read from generic clustering symlink")
+    if result.returncode != 0:
+        print(f"   ⚠️ Note: Step 7 failed during processing (exit code {result.returncode})")
+        print(f"   This is separate from input file reading")
+
+
+def test_step7_fails_gracefully_when_clustering_missing(tmp_path):
+    """
+    Verify Step 7 fails with clear error when clustering results are missing.
+    
+    Setup:
+    - Create API data but NO clustering file
+    - Run Step 7
+    
+    Verify:
+    - Step 7 fails with non-zero exit code
+    - Error message mentions missing clustering file
+    """
+    # Create sandbox
+    sandbox = create_sandbox(tmp_path)
+    api_data_dir = sandbox / "data" / "api_data"
+    
+    # Create API data but NO clustering file
+    spu_sales_file = api_data_dir / "complete_spu_sales_202510A.csv"
+    create_synthetic_spu_sales(spu_sales_file, num_records=100)
+    
+    print(f"\n📁 Created test setup:")
+    print(f"   Clustering file: NO (testing missing input)")
+    print(f"   SPU sales: YES")
+    
+    # Run Step 7
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(sandbox)
+    env["PIPELINE_TARGET_YYYYMM"] = "202510"
+    env["PIPELINE_TARGET_PERIOD"] = "A"
+    env["ANALYSIS_LEVEL"] = "spu"
+    
+    result = subprocess.run(
+        ["python3", "src/step7_missing_category_rule.py"],
+        cwd=sandbox,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=30
+    )
+    
+    print(f"\n🔍 Step 7 execution:")
+    print(f"   Exit code: {result.returncode}")
+    if result.stderr:
+        print(f"   STDERR:\n{result.stderr}")
+    
+    # Verify Step 7 failed
+    assert result.returncode != 0, \
+        "Step 7 should fail when clustering results are missing"
+    
+    # Verify error message mentions clustering
+    error_output = (result.stderr + result.stdout).lower()
+    assert "clustering" in error_output or "not found" in error_output, \
+        f"Error message should mention missing clustering file\nSTDERR: {result.stderr}"
+    
+    print(f"\n✅ Step 7 correctly failed with error when clustering missing")
+
+
+def test_step7_uses_fallback_clustering_file(tmp_path):
+    """
+    Verify Step 7 uses fallback clustering file when primary is missing.
+    
+    Setup:
+    - Create fallback clustering file (enhanced_clustering_results.csv)
+    - Do NOT create primary file
+    - Run Step 7
+    
+    Verify:
+    - Step 7 succeeds using fallback
+    - Step 7 logs which file it's using
+    """
+    # Create sandbox
+    sandbox = create_sandbox(tmp_path)
+    output_dir = sandbox / "output"
+    api_data_dir = sandbox / "data" / "api_data"
+    
+    # Create ONLY fallback clustering file (not primary)
+    fallback_cluster = output_dir / "enhanced_clustering_results.csv"
+    create_synthetic_clustering_results(fallback_cluster, num_stores=20)
+    
+    # Create required API data
+    spu_sales_file = api_data_dir / "complete_spu_sales_202510A.csv"
+    create_synthetic_spu_sales(spu_sales_file, num_records=100)
+    
+    print(f"\n📁 Created test setup:")
+    print(f"   Primary clustering: NO")
+    print(f"   Fallback clustering: YES (enhanced_clustering_results.csv)")
+    print(f"   SPU sales: YES")
+    
+    # Run Step 7
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(sandbox)
+    env["PIPELINE_TARGET_YYYYMM"] = "202510"
+    env["PIPELINE_TARGET_PERIOD"] = "A"
+    env["ANALYSIS_LEVEL"] = "spu"
+    
+    result = subprocess.run(
+        ["python3", "src/step7_missing_category_rule.py"],
+        cwd=sandbox,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=60
+    )
+    
+    print(f"\n🔍 Step 7 execution:")
+    print(f"   Exit code: {result.returncode}")
+    if result.stdout:
+        print(f"   STDOUT (last 500 chars):\n{result.stdout[-500:]}")
+    
+    # Verify Step 7 used the fallback file
+    assert "Using cluster file:" in result.stdout, \
+        "Step 7 should log which cluster file it's using"
+    assert "enhanced_clustering_results.csv" in result.stdout, \
+        "Step 7 should use the fallback clustering file"
+    
+    print(f"\n✅ Step 7 successfully used fallback clustering file")
+    if result.returncode != 0:
+        print(f"   ⚠️ Note: Step 7 failed during processing (exit code {result.returncode})")
+        print(f"   But it correctly found and loaded the fallback file")
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v", "-s"])

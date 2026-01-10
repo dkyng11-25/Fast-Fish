@@ -1,0 +1,19 @@
+# AIS-153 Development artifacts (add these to .gitignore)
+
+# Backup tracking files
+.last_*.txt
+
+# Backup directories
+backup_*/
+
+# Comparison scripts
+run_*comparison*.sh
+compare_legacy_vs_refactored_clustering.py
+
+# Development utilities
+backup_refactored_outputs.sh
+run_phase4_validation.py
+
+# Development documentation (optional - remove if you want to keep these)
+# LEGACY_VS_REFACTORED_FINAL_RESULTS.md
+# REFACTORED_VS_LEGACY_100STORES_PLAN.md

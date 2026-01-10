@@ -1,0 +1,146 @@
+## **1  Deliverables** 
+
+* **D‑A Seasonal Clustering Snapshot \- 1.5 days**
+
+  * Current season’s clusters produced with latest data.
+
+  * Input windows:
+
+    * Most‑recent *completed* season (just ended).
+
+    * Same season last year (YoY reference).
+
+  * Output files:
+
+    * `store_id → cluster_id` mapping.
+
+    * Cluster centroid/feature profile (machine‑readable).
+
+* **D‑B Cluster Descriptor Dictionary \- 1 day**
+
+  * Human‑readable labels for every cluster:
+
+    * Trend‑orientation score (e.g., “High‑fashion”, “Basics‑heavy”).
+
+    * Climate zone (hot / temperate / cold).
+
+    * Any other agreed taxonomy (traffic tier, price band, etc.).
+
+  * Delivered in bilingual CSV or JSON.
+
+* **D‑C Cluster Stability Report \- 4.5 days**
+
+  * History of cluster membership over N past seasons.
+
+  * Stability metrics (e.g., Jaccard similarity, % member retention).
+
+  * List of clusters flagged **“unstable”** under agreed threshold.
+
+* **D‑D Back‑test Performance Pack \- 4.5 days**
+
+  * Retrospective accuracy tests of the clustering & tag‑based recommendations for each past season.
+
+  * Metrics: sell‑through uplift, allocation accuracy, error bands.
+
+  * Commentary on clusters that under‑performed.
+
+* **D‑E Target‑SPU Recommendation Output \- 1.5 days**
+
+  * A/B‑test‑ready CSV with store‑level quantities and rationale scores.
+
+* **D‑F Label/Tag Recommendation Sheet** (bilingual, FF template). **1.5 days**
+
+* **D‑G Revised Baseline Logic Doc & Code** (recent season \+ YoY weighting). \- **2.5 days**
+
+* **D‑H Interactive Dashboard & Release Notes \- 12 days**
+
+  * Clustering, stability, SPU pages etc. 
+
+---
+
+## **2  Work Streams & Detailed Tasks**
+
+### **A. Seasonal Clustering Engine**
+
+* Agree on official **season cut‑off dates** (e.g., Winter = Dec–Feb).
+
+* Pull datasets for:
+
+  * Most recent completed season.
+
+  * Same season prior year.
+
+* Standardise & merge features.
+
+* Re‑run clustering algorithm (initially k‑means; alternative methods noted below).
+
+* Store snapshot with time‑stamp.
+
+### **B. Cluster Descriptor Tagging**
+
+* Compile reference tables: climate by store, trend index, traffic tier, etc.
+
+* Map each store‑level attribute to its cluster.
+
+* Aggregate to cluster‑level descriptors (majority rule or weighted average).
+
+* Validate descriptors with FF merch team; update taxonomy if needed.
+
+### **C. Historical Tracking & Stability Scoring**
+
+* Maintain season‑by‑season snapshots in a versioned bucket.
+
+* Compute membership overlap between successive snapshots.
+
+* Calculate chosen stability metric (simple retention, Jaccard, or entropy).
+
+* Auto‑flag clusters below threshold.
+
+* Generate season‑over‑season movement plots (feeds dashboard).
+
+### **D. Back‑testing Framework**
+
+* For each historical season, replay tag‑based SPU recommendations.
+
+* Measure KPIs: sell‑through uplift vs. control, allocation error, revenue lift.
+
+* Summarise findings; identify patterns where clustering under‑performed.
+
+### **E. Target‑SPU Allocation Logic**
+
+* Confirm definition of “target quantity” (per day? per display cycle?).
+
+* Decide granularity level (tiered store allocation vs. full store‑level).
+
+* Build rules‑or‑model‑based allocator using:
+
+  * Display capacity tier.
+
+  * Recent sell‑through.
+
+  * Cluster‑level demand patterns.
+
+* Output CSV with `rationale_score`.
+
+### **F. Baseline & Trend Adjustment**
+
+* Weight recent season vs. YoY season (e.g., 60 % / 40 %). So if we are clustering for SPRING- then we take WINTER \- most recent, and then SPRING \-last year and cluster around this information. 
+
+* Optionally add rolling trend adjustment.
+
+* Document formula; unit‑test edge cases.
+
+### **G. Dashboard Updates**
+
+* Add pages:
+
+  * “Seasonal Snapshots” (store map by cluster).
+
+  * “Stability Monitor” (heat map of retention).
+
+  * “Back‑test Results”.
+
+* Historical clustering visualizations  
+* Cluster stability monitor   
+* Weekly changelog distribution.
+
