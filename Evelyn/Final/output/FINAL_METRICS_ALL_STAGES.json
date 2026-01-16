@@ -1,0 +1,63 @@
+{
+  "generated": "2026-01-16T21:15:32.179305",
+  "period": "202506A",
+  "stages": {
+    "baseline0": {
+      "stage": "Baseline 0 (Original)",
+      "silhouette": 0.0478,
+      "calinski_harabasz": 120.6,
+      "davies_bouldin": 2.7253,
+      "n_clusters": 46,
+      "cluster_sizes": {
+        "min": 1,
+        "max": 97,
+        "mean": 49.1
+      },
+      "pca_variance": 0.6705
+    },
+    "c3": {
+      "stage": "Baseline 1 (C3)",
+      "silhouette": 0.2304,
+      "calinski_harabasz": 22319.2,
+      "davies_bouldin": 1.1972,
+      "n_clusters": 30,
+      "cluster_sizes": {
+        "min": 1,
+        "max": 248,
+        "mean": 74.9
+      },
+      "pca_variance": 0.9973
+    },
+    "final": {
+      "stage": "Final (A+B+C)",
+      "silhouette": 0.3754,
+      "calinski_harabasz": 1373.1,
+      "davies_bouldin": 0.8878,
+      "n_clusters": 30,
+      "cluster_sizes": {
+        "min": 26,
+        "max": 177,
+        "mean": 74.9
+      },
+      "improvements": {
+        "A": "Block-wise PCA (SPU 30 + Store 4)",
+        "B": "Log-transform + Row Normalization",
+        "C": "L2 Normalization + Optimized KMeans (n_init=20)"
+      }
+    }
+  },
+  "improvements": {
+    "baseline0_to_c3": {
+      "absolute": 0.1826,
+      "percent": 382.0
+    },
+    "c3_to_final": {
+      "absolute": 0.145,
+      "percent": 62.9
+    },
+    "baseline0_to_final": {
+      "absolute": 0.3276,
+      "percent": 685.4
+    }
+  }
+}

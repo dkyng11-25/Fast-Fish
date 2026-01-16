@@ -1,0 +1,139 @@
+{
+  "generated": "2026-01-16T21:19:07.375797",
+  "datasets_validated": 6,
+  "results": [
+    {
+      "period": "202506A",
+      "baseline": {
+        "silhouette": 0.0478,
+        "n_clusters": 46,
+        "cluster_sizes": {
+          "min": 1,
+          "max": 97
+        }
+      },
+      "final": {
+        "silhouette": 0.3754,
+        "n_clusters": 30,
+        "cluster_sizes": {
+          "min": 26,
+          "max": 177
+        },
+        "n_stores": 2248
+      },
+      "improvement_percent": 685.4
+    },
+    {
+      "period": "202505A",
+      "baseline": {
+        "silhouette": 0.0587,
+        "n_clusters": 46,
+        "cluster_sizes": {
+          "min": 1,
+          "max": 104
+        }
+      },
+      "final": {
+        "silhouette": 0.3611,
+        "n_clusters": 30,
+        "cluster_sizes": {
+          "min": 24,
+          "max": 140
+        },
+        "n_stores": 2263
+      },
+      "improvement_percent": 515.2
+    },
+    {
+      "period": "202408A",
+      "baseline": {
+        "silhouette": 0.0436,
+        "n_clusters": 45,
+        "cluster_sizes": {
+          "min": 1,
+          "max": 95
+        }
+      },
+      "final": {
+        "silhouette": 0.5017,
+        "n_clusters": 30,
+        "cluster_sizes": {
+          "min": 5,
+          "max": 194
+        },
+        "n_stores": 2236
+      },
+      "improvement_percent": 1050.7
+    },
+    {
+      "period": "202410A",
+      "baseline": {
+        "silhouette": 0.056,
+        "n_clusters": 46,
+        "cluster_sizes": {
+          "min": 1,
+          "max": 110
+        }
+      },
+      "final": {
+        "silhouette": 0.5305,
+        "n_clusters": 30,
+        "cluster_sizes": {
+          "min": 11,
+          "max": 185
+        },
+        "n_stores": 2247
+      },
+      "improvement_percent": 847.3
+    },
+    {
+      "period": "202507A",
+      "baseline": {
+        "silhouette": 0.0409,
+        "n_clusters": 45,
+        "cluster_sizes": {
+          "min": 1,
+          "max": 117
+        }
+      },
+      "final": {
+        "silhouette": 0.3519,
+        "n_clusters": 30,
+        "cluster_sizes": {
+          "min": 32,
+          "max": 129
+        },
+        "n_stores": 2220
+      },
+      "improvement_percent": 760.4
+    },
+    {
+      "period": "202409A",
+      "baseline": {
+        "silhouette": 0.0441,
+        "n_clusters": 46,
+        "cluster_sizes": {
+          "min": 14,
+          "max": 123
+        }
+      },
+      "final": {
+        "silhouette": 0.5435,
+        "n_clusters": 30,
+        "cluster_sizes": {
+          "min": 10,
+          "max": 225
+        },
+        "n_stores": 2243
+      },
+      "improvement_percent": 1132.4
+    }
+  ],
+  "summary": {
+    "avg_baseline_silhouette": 0.0485,
+    "avg_final_silhouette": 0.444,
+    "avg_improvement_percent": 831.9,
+    "min_improvement_percent": 515.2,
+    "max_improvement_percent": 1132.4
+  }
+}
