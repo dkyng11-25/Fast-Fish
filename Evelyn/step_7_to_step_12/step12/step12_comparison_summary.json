@@ -1,0 +1,12 @@
+{
+  "execution_timestamp": "2026-01-27 22:29:05",
+  "period": "202506A",
+  "step11_candidates": 626,
+  "step12_recommendations": 5452,
+  "boundary_verified": true,
+  "total_adjustment_units": 36798.589810804595,
+  "scaling_tiers": {
+    "Moderate Adjustment": 3944,
+    "Minimal Adjustment": 1508
+  }
+}
