@@ -1,0 +1,36 @@
+{
+  "execution_timestamp": "2026-01-27 21:20:19",
+  "period": "202506A",
+  "cluster_source": "/Users/dokyungyun/Downloads/ProducMixClustering_spu_clustering_rules_visualization-copy-main/Evelyn/Final/output/clustering_results_final_202506A.csv",
+  "total_stores": 2248,
+  "total_clusters": 30,
+  "step7": {
+    "total_records": 5000,
+    "eligible": 3075,
+    "ineligible": 1925,
+    "add_recommendations": 451,
+    "clusters_used": 30
+  },
+  "step8": {
+    "total_records": 5000,
+    "analyzed": 3075,
+    "filtered": 1925,
+    "imbalanced": 0,
+    "clusters_used": 30
+  },
+  "step9": {
+    "total_records": 5000,
+    "rule9_applied": 289,
+    "skipped": 4711,
+    "clusters_used": 30
+  },
+  "step10": {
+    "total_overcapacity": 1997,
+    "eligible_for_reduction": 1706,
+    "blocked_total": 291,
+    "blocked_by_step7": 199,
+    "blocked_by_step8": 0,
+    "blocked_by_step9": 115,
+    "clusters_used": 30
+  }
+}
