@@ -1,0 +1,15 @@
+{
+  "total_recommendations": 5452,
+  "total_adjustment_units": 36798.589810804595,
+  "avg_adjustment": 6.749557925679492,
+  "step9_dampened_count": "0",
+  "caps_applied": {
+    "none": 3373,
+    "max_pct_current": 1537,
+    "max_pct_median": 542
+  },
+  "scaling_tiers": {
+    "Moderate Adjustment": 3944,
+    "Minimal Adjustment": 1508
+  }
+}
